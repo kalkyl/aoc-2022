@@ -22,10 +22,9 @@ fn score_a((a, b): &(u32, u32)) -> u32 {
     if a == b {
         return 3 + b;
     }
-    if winner(a) == *b {
-        6 + b
-    } else {
-        0 + b
+    match winner(a) == *b {
+        true => 6 + b,
+        false => 0 + b,
     }
 }
 
