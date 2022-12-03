@@ -1,6 +1,6 @@
 use std::{fs::read_to_string, io::Error};
 
-fn find_item(bag: &str) -> char {
+fn find_item(bag: &&str) -> char {
     let (first, second) = bag.split_at(bag.len() / 2);
     first
         .chars()
@@ -26,10 +26,10 @@ fn main() -> Result<(), Error> {
     let bags = read_to_string("./input/3.txt")?;
     let bags: Vec<_> = bags.lines().collect();
 
-    let total_a: u32 = bags.iter().map(|b| prio(find_item(b))).sum();
+    let total_a: u32 = bags.iter().map(find_item).map(prio).sum();
     println!("A: {:?}", total_a);
 
-    let total_b: u32 = bags.chunks(3).map(|g| prio(find_badge(g))).sum();
+    let total_b: u32 = bags.chunks(3).map(find_badge).map(prio).sum();
     println!("B: {:?}", total_b);
     Ok(())
 }
