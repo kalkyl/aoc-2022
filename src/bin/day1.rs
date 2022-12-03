@@ -1,15 +1,15 @@
 use std::{fs::read_to_string, io::Error};
 
 fn main() -> Result<(), Error> {
-    let entries = read_to_string("./input/1.txt")?
+    let entries: Vec<_> = read_to_string("./input/1.txt")?
         .lines()
-        .map(|s| s.parse().ok())
-        .collect::<Vec<Option<u32>>>();
+        .map(|s| s.parse::<u32>().ok())
+        .collect();
 
-    let mut sums = entries
+    let mut sums: Vec<_> = entries
         .split(|x| x.is_none())
         .map(|e| e.iter().map(|c| c.unwrap()).sum::<u32>())
-        .collect::<Vec<_>>();
+        .collect();
 
     let max = sums.iter().max().unwrap();
     println!("A: {:?}", max);
