@@ -37,15 +37,15 @@ fn score_b((a, b): &(u32, u32)) -> u32 {
 }
 
 fn main() -> Result<(), Error> {
-    let entries: Vec<_> = read_to_string("./input/2.txt")?
+    let rounds: Vec<_> = read_to_string("./input/2.txt")?
         .lines()
         .map(|l| l.split_once(' ').map(|(a, b)| (val(a), val(b))).unwrap())
         .collect();
 
-    let total_a: u32 = entries.iter().map(score_a).sum();
+    let total_a: u32 = rounds.iter().map(score_a).sum();
     println!("A: {:?}", total_a);
 
-    let total_b: u32 = entries.iter().map(score_b).sum();
+    let total_b: u32 = rounds.iter().map(score_b).sum();
     println!("B: {:?}", total_b);
     Ok(())
 }
