@@ -1,4 +1,4 @@
-use std::{io::Error, fs::read_to_string};
+use std::{fs::read_to_string, io::Error};
 
 const RULES: [(u32, u32); 3] = [(1, 2), (2, 3), (3, 1)];
 
@@ -10,10 +10,10 @@ fn loser(winner: &u32) -> u32 {
     RULES.iter().find(|(_, w)| w == winner).unwrap().0
 }
 
-fn val(c: char) -> u32 {
+fn val(c: &str) -> u32 {
     match c {
-        'A' | 'X' => 1,
-        'B' | 'Y' => 2,
+        "A" | "X" => 1,
+        "B" | "Y" => 2,
         _ => 3,
     }
 }
@@ -40,12 +40,7 @@ fn score_b((a, b): &(u32, u32)) -> u32 {
 fn main() -> Result<(), Error> {
     let entries: Vec<_> = read_to_string("./input/2.txt")?
         .lines()
-        .map(|l| {
-            (
-                val(l.chars().nth(0).unwrap()),
-                val(l.chars().nth(2).unwrap()),
-            )
-        })
+        .map(|l| l.split_once(' ').map(|(a, b)| (val(a), val(b))).unwrap())
         .collect();
 
     let total_a: u32 = entries.iter().map(score_a).sum();

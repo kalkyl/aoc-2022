@@ -1,4 +1,4 @@
-use std::{io::Error, fs::read_to_string};
+use std::{fs::read_to_string, io::Error};
 
 fn main() -> Result<(), Error> {
     let entries = read_to_string("./input/1.txt")?
