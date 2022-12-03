@@ -1,25 +1,23 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader, Error};
+use std::{io::Error, fs::read_to_string};
 
 fn main() -> Result<(), Error> {
-    let entries = BufReader::new(File::open("./input/1.txt")?)
+    let entries = read_to_string("./input/1.txt")?
         .lines()
-        .map(|l| l.map(|v| v.parse().ok()))
-        .collect::<Result<Vec<Option<u32>>, _>>()?;
+        .map(|s| s.parse().ok())
+        .collect::<Vec<Option<u32>>>();
 
     let mut sums = entries
         .split(|x| x.is_none())
         .map(|e| e.iter().map(|c| c.unwrap()).sum::<u32>())
         .collect::<Vec<_>>();
 
-    // A
-    println!("{:?}", sums.iter().max());
+    let max = sums.iter().max().unwrap();
+    println!("A: {:?}", max);
 
-    // B
     sums.sort();
     sums.reverse();
     let sum: u32 = sums.iter().take(3).sum();
-    println!("{:?}", sum);
+    println!("B: {:?}", sum);
 
     Ok(())
 }
