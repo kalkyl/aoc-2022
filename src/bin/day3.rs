@@ -1,10 +1,10 @@
 use std::{fs::read_to_string, io::Error};
 
 fn find_item(bag: &&str) -> char {
-    let (first, second) = bag.split_at(bag.len() / 2);
-    first
+    let (first_half, second_half) = bag.split_at(bag.len() / 2);
+    first_half
         .chars()
-        .find(|&a| second.chars().any(|b| b == a))
+        .find(|&a| second_half.chars().any(|b| b == a))
         .unwrap()
 }
 
