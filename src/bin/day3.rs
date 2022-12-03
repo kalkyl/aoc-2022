@@ -4,14 +4,14 @@ fn find_item(items: &&str) -> char {
     let (first_half, second_half) = items.split_at(items.len() / 2);
     first_half
         .chars()
-        .find(|&a| second_half.chars().any(|b| b == a))
+        .find(|&a| second_half.contains(a))
         .unwrap()
 }
 
 fn find_badge(group: &[&str]) -> char {
     group[0]
         .chars()
-        .find(|&a| group[1].chars().any(|b| b == a) && group[2].chars().any(|c| c == a))
+        .find(|&a| group[1].contains(a) && group[2].contains(a))
         .unwrap()
 }
 
