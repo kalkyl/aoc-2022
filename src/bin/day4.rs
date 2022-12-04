@@ -1,7 +1,7 @@
 use std::{fs::read_to_string, io::Error};
 type Section = (u32, u32);
 
-fn sections(line: &str) -> (Section, Section) {
+fn pair(line: &str) -> (Section, Section) {
     fn parse(s: &str) -> Section {
         let (start, end) = s.split_once('-').unwrap();
         (start.parse().unwrap(), end.parse().unwrap())
@@ -23,10 +23,7 @@ fn overlaps_any((a, b): &&(Section, Section)) -> bool {
 }
 
 fn main() -> Result<(), Error> {
-    let pairs: Vec<_> = read_to_string("./input/4.txt")?
-        .lines()
-        .map(sections)
-        .collect();
+    let pairs: Vec<_> = read_to_string("./input/4.txt")?.lines().map(pair).collect();
 
     let count_a = pairs.iter().filter(overlaps_all).count();
     println!("A: {:?}", count_a);
