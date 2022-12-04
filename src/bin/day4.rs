@@ -2,12 +2,12 @@ use std::{fs::read_to_string, io::Error, ops::RangeInclusive};
 type Section = RangeInclusive<u32>;
 
 fn pair(line: &str) -> (Section, Section) {
-    fn parse(s: &str) -> Section {
+    fn section(s: &str) -> Section {
         let (start, end) = s.split_once('-').unwrap();
         start.parse().unwrap()..=end.parse().unwrap()
     }
     let (a, b) = line.split_once(',').unwrap();
-    (parse(a), parse(b))
+    (section(a), section(b))
 }
 
 fn overlaps_full((a, b): &&(Section, Section)) -> bool {
