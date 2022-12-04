@@ -11,11 +11,11 @@ fn pair(line: &str) -> (Section, Section) {
 }
 
 fn overlaps_full((a, b): &&(Section, Section)) -> bool {
-    a.contains(&b.start()) && a.contains(&b.end()) || b.contains(&a.start()) && b.contains(&a.end())
+    a.contains(b.start()) && a.contains(b.end()) || b.contains(a.start()) && b.contains(a.end())
 }
 
 fn overlaps_any((a, b): &&(Section, Section)) -> bool {
-    a.contains(&b.start()) || a.contains(&b.end()) || b.contains(&a.start()) || b.contains(&a.end())
+    a.contains(b.start()) || a.contains(b.end()) || b.contains(a.start()) || b.contains(a.end())
 }
 
 fn main() -> Result<(), Error> {
