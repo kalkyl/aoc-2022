@@ -2,10 +2,10 @@ use std::{fs::read_to_string, io::Error};
 type Instruction = (usize, usize, usize);
 type Stacks = [Vec<char>; 9];
 
-fn instruction(s: &str) -> Instruction {
-    let nums: Vec<_> = s
+fn instruction(line: &str) -> Instruction {
+    let nums: Vec<_> = line
         .split_whitespace()
-        .filter_map(|y| y.parse::<usize>().ok())
+        .filter_map(|s| s.parse::<usize>().ok())
         .collect();
     (nums[0], nums[1] - 1, nums[2] - 1)
 }
