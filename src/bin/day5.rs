@@ -25,6 +25,19 @@ fn rearrange_b(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
     stacks
 }
 
+fn top_crates(
+    init: &Stacks,
+    instructions: &[Instruction],
+    f: impl Fn(Stacks, &Instruction) -> Stacks,
+) -> String {
+    instructions
+        .iter()
+        .fold(init.clone(), f)
+        .iter()
+        .filter_map(|x| x.last())
+        .collect()
+}
+
 fn main() -> Result<(), Error> {
     let input = read_to_string("./input/5.txt")?;
     let mut stacks_init: Stacks = Default::default();
@@ -35,21 +48,11 @@ fn main() -> Result<(), Error> {
     }
     let instructions: Vec<Instruction> = input.lines().skip(10).map(instruction).collect();
 
-    let tops_a: String = instructions
-        .iter()
-        .fold(stacks_init.clone(), rearrange_a)
-        .iter()
-        .filter_map(|x| x.last())
-        .collect();
-    println!("A: {:?}", tops_a);
+    let crates_a = top_crates(&stacks_init, &instructions, rearrange_a);
+    println!("A: {}", crates_a);
 
-    let tops_b: String = instructions
-        .iter()
-        .fold(stacks_init.clone(), rearrange_b)
-        .iter()
-        .filter_map(|x| x.last())
-        .collect();
-    println!("B: {:?}", tops_b);
+    let crates_b = top_crates(&stacks_init, &instructions, rearrange_b);
+    println!("B: {}", crates_b);
 
     Ok(())
 }
