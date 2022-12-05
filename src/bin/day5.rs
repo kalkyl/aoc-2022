@@ -7,21 +7,21 @@ fn instruction(s: &str) -> Instruction {
         .split_whitespace()
         .filter_map(|y| y.parse::<usize>().ok())
         .collect();
-    (nums[0], nums[1], nums[2])
+    (nums[0], nums[1] - 1, nums[2] - 1)
 }
 
 fn rearrange_a(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
     for _ in 0..n {
-        if let Some(item) = stacks[src - 1].pop() {
-            stacks[dst - 1].push(item);
+        if let Some(item) = stacks[src].pop() {
+            stacks[dst].push(item);
         }
     }
     stacks
 }
 
 fn rearrange_b(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
-    let items = stacks[src - 1].split_off(stacks[src - 1].len() - n);
-    stacks[dst - 1].extend(items);
+    let items = stacks[src].split_off(stacks[src].len() - n);
+    stacks[dst].extend(items);
     stacks
 }
 
