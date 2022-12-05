@@ -11,11 +11,9 @@ fn instruction(line: &str) -> Instruction {
 }
 
 fn method_a(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
-    for _ in 0..n {
-        if let Some(item) = stacks[src].pop() {
-            stacks[dst].push(item);
-        }
-    }
+    let mut items = stacks[src].split_off(stacks[src].len() - n);
+    items.reverse();
+    stacks[dst].extend(items);
     stacks
 }
 
