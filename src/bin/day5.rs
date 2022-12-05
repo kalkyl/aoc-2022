@@ -26,15 +26,15 @@ fn rearrange_b(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
 }
 
 fn top_crates(
-    init: &Stacks,
+    initial: &Stacks,
     instructions: &[Instruction],
     rearrange_fn: impl Fn(Stacks, &Instruction) -> Stacks,
 ) -> String {
     instructions
         .iter()
-        .fold(init.clone(), rearrange_fn)
+        .fold(initial.clone(), rearrange_fn)
         .iter()
-        .filter_map(|x| x.last())
+        .filter_map(|s| s.last())
         .collect()
 }
 
