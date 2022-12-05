@@ -10,7 +10,7 @@ fn instruction(s: &str) -> Instruction {
     (nums[0], nums[1] - 1, nums[2] - 1)
 }
 
-fn rearrange_a(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
+fn method_a(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
     for _ in 0..n {
         if let Some(item) = stacks[src].pop() {
             stacks[dst].push(item);
@@ -19,7 +19,7 @@ fn rearrange_a(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
     stacks
 }
 
-fn rearrange_b(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
+fn method_b(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
     let items = stacks[src].split_off(stacks[src].len() - n);
     stacks[dst].extend(items);
     stacks
@@ -28,11 +28,11 @@ fn rearrange_b(mut stacks: Stacks, &(n, src, dst): &Instruction) -> Stacks {
 fn top_crates(
     initial: &Stacks,
     instructions: &[Instruction],
-    rearrange_fn: impl Fn(Stacks, &Instruction) -> Stacks,
+    rearrange_method: impl Fn(Stacks, &Instruction) -> Stacks,
 ) -> String {
     instructions
         .iter()
-        .fold(initial.clone(), rearrange_fn)
+        .fold(initial.clone(), rearrange_method)
         .iter()
         .filter_map(|s| s.last())
         .collect()
@@ -40,18 +40,18 @@ fn top_crates(
 
 fn main() -> Result<(), Error> {
     let input = read_to_string("./input/5.txt")?;
-    let mut stacks_init: Stacks = Default::default();
+    let mut stacks: Stacks = Default::default();
     for line in input.lines().take(8) {
         for (i, c) in line.char_indices().filter(|(_, x)| x.is_alphabetic()) {
-            stacks_init[i / 4].insert(0, c);
+            stacks[i / 4].insert(0, c);
         }
     }
     let instructions: Vec<_> = input.lines().skip(10).map(instruction).collect();
 
-    let crates_a = top_crates(&stacks_init, &instructions, rearrange_a);
+    let crates_a = top_crates(&stacks, &instructions, method_a);
     println!("A: {}", crates_a);
 
-    let crates_b = top_crates(&stacks_init, &instructions, rearrange_b);
+    let crates_b = top_crates(&stacks, &instructions, method_b);
     println!("B: {}", crates_b);
 
     Ok(())
