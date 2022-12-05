@@ -41,7 +41,7 @@ fn main() -> Result<(), Error> {
     let mut stacks: Stacks = Default::default();
     for line in input.lines().take(8) {
         for (i, c) in line.char_indices().filter(|(_, x)| x.is_alphabetic()) {
-            stacks[i / 4].insert(0, c);
+            stacks[(i - 1) / 4].insert(0, c);
         }
     }
     let instructions: Vec<_> = input.lines().skip(10).map(instruction).collect();
