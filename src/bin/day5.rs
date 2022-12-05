@@ -40,7 +40,7 @@ fn main() -> Result<(), Error> {
     let input = read_to_string("./input/5.txt")?;
     let mut stacks: Stacks = Default::default();
     for line in input.lines().take(8) {
-        for (i, c) in line.char_indices().filter(|(_, x)| x.is_alphabetic()) {
+        for (i, c) in line.char_indices().filter(|(_, c)| c.is_alphabetic()) {
             stacks[(i - 1) / 4].insert(0, c);
         }
     }
