@@ -45,7 +45,7 @@ fn main() -> Result<(), Error> {
 
     let tops_b: String = instructions
         .iter()
-        .fold(stacks_init, rearrange_b)
+        .fold(stacks_init.clone(), rearrange_b)
         .iter()
         .filter_map(|x| x.last())
         .collect();
