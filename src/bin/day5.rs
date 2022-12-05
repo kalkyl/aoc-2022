@@ -46,7 +46,7 @@ fn main() -> Result<(), Error> {
             stacks_init[i / 4].insert(0, c);
         }
     }
-    let instructions: Vec<Instruction> = input.lines().skip(10).map(instruction).collect();
+    let instructions: Vec<_> = input.lines().skip(10).map(instruction).collect();
 
     let crates_a = top_crates(&stacks_init, &instructions, rearrange_a);
     println!("A: {}", crates_a);
